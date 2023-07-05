@@ -1,2 +1,2 @@
 # backend
-The main server of strafe.chat
+Backend source code of the StrafeChat App. 
