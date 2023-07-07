@@ -18,9 +18,14 @@ fs.readdirSync(path.join(__dirname, "routes/v1")).forEach((route) => {
 
 app.get("/api/v1", (req, res) => res.send("Hello World"))
 
-//mongoose.connect(process.env.MONGOURI).then(async () => {
-    //console.info(`[INFO] Connected to MongoDB.`)
-     app.listen(process.env.PORT, () => {
+mongoose.connect(process.env.MONGOURI).then(async () => {
+    console.info(`[INFO] Connected to MongoDB.`)
+    global.server = app.listen(process.env.PORT, () => {
          console.info(`[INFO] Running on port ${process.env.PORT}.`)
+         require("./websocket")
      })
-//})
+}).catch((err)=>{
+    console.log("[ERROR] DB CONNECTION.");
+    console.error(err.message)
+    process.exit();
+});
