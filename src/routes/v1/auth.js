@@ -10,6 +10,7 @@ router.get("/", (req, res) => {
 })
 
 router.post("/login", async (req, res) => {
+    console.log(req.body)
     const { username, password } = req.body;
     if (!username || !password) {
         return res.status(400).json({ message: "Username and Password are required."})
@@ -62,7 +63,8 @@ router.post("/register", async (req, res) => {
    }
 });
 
-router.get("/", verifyToken, (req, res) => {
+router.get("/verify", verifyToken, (req, res) => {
+    console.log("FUCKIN G KYS")
     res.status(200).json({ user: req.user });
 });
 
