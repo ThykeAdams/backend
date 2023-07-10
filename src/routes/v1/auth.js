@@ -10,19 +10,20 @@ router.get("/", (req, res) => {
 })
 
 router.post("/login", async (req, res) => {
-    console.log(req.body)
+    console.log("hello")
     const { username, password } = req.body;
     if (!username || !password) {
         return res.status(400).json({ message: "Username and Password are required."})
     }
      let user = await userModel.findOne({ username });
      if (!user) res.status(404).json({ message: "A user with this username could not be found."})
-  
+    console.log(user)
      bcrypt.compare(password, user.password, (bcryptErr, isMatch) => {
         if (bcryptErr) {
             return res.status(500).json({ message: "Internal Server Error."})
         }
         if (!isMatch) {
+            console.log("not correct info")
             return res.status(401).json({ message: "Invaild Username or Password"})
         }
 
@@ -55,7 +56,7 @@ router.post("/register", async (req, res) => {
          dob,
          token: await Generator.generateToken(_id, hashedPassword)
     });
-    res.json({ user });
+    res.json(user);
 });
    } catch(err) {
     res.status(500).json({ message: "Internal Server Error"})
@@ -64,7 +65,6 @@ router.post("/register", async (req, res) => {
 });
 
 router.get("/verify", verifyToken, (req, res) => {
-    console.log("FUCKIN G KYS")
     res.status(200).json({ user: req.user });
 });
 
