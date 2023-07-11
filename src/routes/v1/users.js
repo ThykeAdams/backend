@@ -10,4 +10,8 @@ router.get("/:id", verifyToken, (req, res) => {
 
 })
 
+router.get("/status", verifyToken, (req, res) => {
+   res.status(200).json(req.user.status, req.user.online)
+})
+
 module.exports = router;

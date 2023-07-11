@@ -43,7 +43,8 @@ let app = mongoose.Schema({
         default: "offline"
     },
     online: { 
-        type: Boolean //just so we always know if they are really online cause with dnd we don't know that might be offline or smth
+        type: Boolean,
+        default: "offline" //just so we always know if they are really online cause with dnd we don't know that might be offline or smth
     },
     friends: {
         type: [String],

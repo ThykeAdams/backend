@@ -14,18 +14,20 @@ const events = io.of("/events")
 
 events.on("connection", async (socket) => { 
     if (socket.handshake.query["token"]) {
-        await userModel.findOne({ token: socket.handshake.query["token"]}).then(async (user) => {
+     let user = await userModel.findOne({ token: socket.handshake.query["token"]})
+     if (user) {
             user.online = true;
-            user?.save().then(() => {
+            user.save().then(() => {
                 sessions.set(user.id, socket);
                 io.sockets.emit("PresenceUpdate", user);
             });
-            console.info(`User Connected ${user?.username}`);
-        })
-    }
+            console.info(`User connected ${user?.username}`);
+            events.emit("ready", user)
+        } 
 
-socket.on("disconnect", async (args) => {
-    console.log("User disconnected imagine ")
- })
+        socket.on("disconnect", async (args) => {
+            console.log(`User disconnected ${user?.username}`)
+         })
+    }
 })
 
