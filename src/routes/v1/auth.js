@@ -15,8 +15,8 @@ router.post("/login", async (req, res) => {
         return res.status(400).json({ message: "Username and Password are required."})
     }
      let user = await userModel.findOne({ username });
-     if (!user) res.status(404).json({ message: "A user with this username could not be found."})
-     bcrypt.compare(password, user.password, (bcryptErr, isMatch) => {
+     if (!user) return res.status(404).json({ message: "A user with this username could not be found."})
+     bcrypt.compare(password, user?.password, (bcryptErr, isMatch) => {
         if (bcryptErr) {
             return res.status(500).json({ message: "Internal Server Error."})
         }
@@ -31,7 +31,7 @@ router.post("/login", async (req, res) => {
 
 router.post("/register", async (req, res) => {
     const { username, email, password, discriminator, dob } = req.body;
-    console.log(req.body)
+    
     if (!username || !email || !password || !discriminator || !dob) {
         return res.status(400).json({ message: "Username, Email, Password, Discriminator, and Date of Birth (DOB) are required."})
     }

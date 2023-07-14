@@ -9,7 +9,7 @@ async function verifyToken(req, res, next) {
      if (!user) return res.status(400).json({ message: "Access Denied" });
 
       req.user = user;
-      if (req.user) next();
+      if (user) next();
       else res.status(400).json({ message: "Access Denied" });
 }
 

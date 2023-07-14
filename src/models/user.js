@@ -44,7 +44,7 @@ let app = mongoose.Schema({
     },
     online: { 
         type: Boolean,
-        default: "offline" //just so we always know if they are really online cause with dnd we don't know that might be offline or smth
+        default: false //just so we always know if they are really online cause with dnd we don't know that might be offline or smth
     },
     friends: {
         type: [String],
@@ -56,7 +56,10 @@ let app = mongoose.Schema({
         ref: "users",
         default: []
     },
-    
+    badges: {
+        type: [String],
+        default: []
+    },
 }, 
 {
     _id: false 

@@ -6,28 +6,31 @@ global.sessions = new Map();
 const io = new Server(server, {
     cors: {
         origin: "*",
-        methods: ["GET", "POST"] 
     }
 })
 
 const events = io.of("/events")
-
+global.events = events;
 events.on("connection", async (socket) => { 
     if (socket.handshake.query["token"]) {
      let user = await userModel.findOne({ token: socket.handshake.query["token"]})
      if (user) {
+        if (sessions.get(user.token)) return socket.disconnect();
             user.online = true;
-            user.save().then(() => {
-                sessions.set(user.id, socket);
-                io.sockets.emit("PresenceUpdate", user);
+          user.save().then(() => {
+               events.emit("PresenceUpdate", user); 
+               sessions.set(user.token, socket);
             });
             console.info(`User connected ${user?.username}`);
-            events.emit("ready", user)
         } 
 
         socket.on("disconnect", async (args) => {
             console.log(`User disconnected ${user?.username}`)
+            sessions.delete(user.token);
          })
+    } else {
+        socket.disconnect();
+        return;
     }
 })
 
