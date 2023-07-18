@@ -13,11 +13,17 @@ router.get("/status", verifyToken, (req, res) => {
     res.status(200).json({ status: req.user.status, online: req.user.online})
  })
 
-router.get("/dms", verifyToken, async (req, res) => {
-    let dms = await dmModel.find({ participants: { $in: [req.user._id] } })
-      console.log(dms)
-      res.status(200).json(dms)
-})
+ router.get("/dms", verifyToken, async (req, res) => {
+    try {
+      const dms = await dmModel.find({ participants: { $all: [req.user._id] } });
+      res.status(200).json(dms);
+    } catch (error) {
+      console.error('Error fetching DMs:', error);
+      res.status(500).json({ error: 'Failed to fetch DMs' });
+    }
+  });
+  
+  
 
 router.post("/dms", verifyToken, async (req, res) => {
     
@@ -52,8 +58,10 @@ router.post("/friends/new", verifyToken, async (req, res) => {
 
 })
 
-router.get("/:id", verifyToken, (req, res) => {
-
+router.get("/:userid", verifyToken, async (req, res) => {
+ let userRaw = await userModel.findById({ _id: req.params.userid });
+ if (!userRaw) return res.status(404).json({ message: "Couldn't find that user in the database."})
+ res.status(200).json(userRaw)
 })
 
 module.exports = router;

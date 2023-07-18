@@ -36,15 +36,18 @@ let app = mongoose.Schema({
         type: String,
         required: true
     },
-    
     status: {
         type: String,
         enum: ["online", "offline", "idle", "dnd", "coding", "streaming", "sleeping"],
         default: "offline"
     },
+    customStatus: {
+        type: String,
+        required: false
+    },
     online: { 
         type: Boolean,
-        default: false //just so we always know if they are really online cause with dnd we don't know that might be offline or smth
+        default: false
     },
     friends: {
         type: [String],

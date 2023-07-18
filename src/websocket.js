@@ -26,7 +26,7 @@ events.on("connection", async (socket) => {
 
         socket.on("disconnect", async (args) => {
             console.log(`User disconnected ${user?.username}`)
-            sessions.delete(user.token);
+            sessions.delete(user?.token);
          })
     } else {
         socket.disconnect();

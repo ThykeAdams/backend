@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 
 fs.readdirSync(path.join(__dirname, "routes/v1")).forEach((route) => {
-    app.use(`/api/v1/${route.replace(".js", "")}`, require(`./routes/v1/${route}`)); //please work harder.
+    app.use(`/api/v1/${route.replace(".js", "")}`, require(`./routes/v1/${route}`));
 })
 
 app.get("/api/v1", (req, res) => res.send("Hello World"))
