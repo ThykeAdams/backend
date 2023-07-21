@@ -15,14 +15,14 @@ router.post("/login", async (req, res) => {
         return res.status(400).json({ message: "Username and Password are required."})
     }
      let user = await userModel.findOne({ username });
-     if (!user) return res.status(404).json({ message: "A user with this username could not be found."})
+     if (!user) return res.status(404).json({ message: "Invaild Username or Password."})
      bcrypt.compare(password, user?.password, (bcryptErr, isMatch) => {
         if (bcryptErr) {
             return res.status(500).json({ message: "Internal Server Error."})
         }
         if (!isMatch) {
             console.log("not correct info")
-            return res.status(401).json({ message: "Invaild Username or Password"})
+            return res.status(401).json({ message: "Invaild Username or Password."})
         }
 
         res.json(user);
