@@ -22,12 +22,15 @@ events.on("connection", async (socket) => {
                sessions.set(user.token, socket);
             });
             console.info(`User connected ${user?.username}`);
-        } 
 
         socket.on("disconnect", async (args) => {
             console.log(`User disconnected ${user?.username}`)
             sessions.delete(user?.token);
          })
+        } else {
+          socket.disconnect();
+          return;
+        }
     } else {
         socket.disconnect();
         return;
