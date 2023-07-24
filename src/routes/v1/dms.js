@@ -16,7 +16,7 @@ router.post("/:userId/messages", verifyToken, async (req, res) => {
         .status(400)
         .json({ message: "Please provide content for your message!" });
 
-    const message = {
+    events.emit("DirectMessageCreate", {
       author: {
         id: req.user._id,
         username: req.user.username,
@@ -24,13 +24,6 @@ router.post("/:userId/messages", verifyToken, async (req, res) => {
       },
       content,
       createdAt: Date.now(),
-    };
-
-    events.emit("DirectMessageCreate", {
-      message: content,
-      sender: {
-        username: req.user.username,
-      },
     });
 
     return res.status(200).json("Message sent successfully!");

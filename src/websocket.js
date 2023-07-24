@@ -15,7 +15,6 @@ events.on("connection", async (socket) => {
     if (socket.handshake.query["token"]) {
      let user = await userModel.findOne({ token: socket.handshake.query["token"]})
      if (user) {
-        if (sessions.get(user.token)) return socket.disconnect();
             user.online = true;
           user.save().then(() => {
                events.emit("PresenceUpdate", user); 
