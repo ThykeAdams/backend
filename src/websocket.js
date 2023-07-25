@@ -20,7 +20,7 @@ events.on("connection", async (socket) => {
                events.emit("PresenceUpdate", user); 
                sessions.set(user.token, socket);
                setTimeout(() => {
-                events.emit("ready", user)
+                events.emit("ready", {user, message: "Online and Ready"})
                   }, 500)
             });
             console.info(`User connected ${user?.username}`);
