@@ -65,7 +65,8 @@ let app = mongoose.Schema({
     },
 }, 
 {
-    _id: false 
+    _id: false,
+    timestamps: true,
 })
 
 module.exports = mongoose.model("users", app);
