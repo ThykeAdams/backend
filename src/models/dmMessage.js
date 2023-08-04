@@ -2,23 +2,24 @@ const mongoose = require("mongoose");
 
 let app = mongoose.Schema(
   {
-    participants: {
-      type: [String],
-      ref: "users",
+    _id: {
+      type: String,
       required: true,
     },
-    lastMessage: {
+    content: {
       type: Date,
       required: true,
     },
-    isPriority: {
-      type: Boolean,
+    author: {
+      type: String,
+      ref: "users",
       default: false,
     },
   },
   {
+    _id: false,
     timestamps: true,
   }
 );
 
-module.exports = mongoose.model("dms", app);
+module.exports = mongoose.model("dmMessages", app);

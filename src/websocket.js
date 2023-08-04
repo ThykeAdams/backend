@@ -1,5 +1,6 @@
 const { Server } = require("socket.io");
 const userModel = require("./models/user")
+const dmModel = require("./models/dm")
 const fs = require("node:fs")
 global.sessions = new Map();
 
@@ -24,6 +25,15 @@ events.on("connection", async (socket) => {
                   }, 500)
             });
             console.info(`User connected ${user?.username}`);
+
+            socket.on("join", async (params, callback) => {
+            const dm = await dmModel.findOne({
+                participants: { $all: [params.user._id, params.target] }
+              });
+                if (!dm) return console.log("not found")
+                socket.join(dm._id.toString());
+                callback();
+            });
 
         socket.on("disconnect", async (args) => {
             console.log(`User disconnected ${user?.username}`)
