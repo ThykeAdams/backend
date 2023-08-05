@@ -36,14 +36,18 @@ let app = mongoose.Schema({
         type: String,
         required: true
     },
-    
     status: {
         type: String,
         enum: ["online", "offline", "idle", "dnd", "coding", "streaming", "sleeping"],
         default: "offline"
     },
+    customStatus: {
+        type: String,
+        required: false
+    },
     online: { 
-        type: Boolean //just so we always know if they are really online cause with dnd we don't know that might be offline or smth
+        type: Boolean,
+        default: false
     },
     friends: {
         type: [String],
@@ -55,10 +59,14 @@ let app = mongoose.Schema({
         ref: "users",
         default: []
     },
-    
+    badges: {
+        type: [String],
+        default: []
+    },
 }, 
 {
-    _id: false 
+    _id: false,
+    timestamps: true,
 })
 
 module.exports = mongoose.model("users", app);

@@ -9,12 +9,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Revurn/backend.git"
+    "url": "git+https://github.com/StrafeChat/backend.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Revurn/backend/issues"
+    "url": "https://github.com/StrafeChat/backend/issues"
   },
   "homepage": "https://github.com/Revurn/backend#readme",
   "dependencies": {
