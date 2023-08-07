@@ -5,7 +5,7 @@ const dmModel = require("../models/dm");
 const utils = {};
 
 utils.createDmMessage = function saveMessage(events, data){
-    const { dm, author, content } = data;
+    const { dm, author, content, id, nonce } = data;
    // userModel.findById((data.user)).then((rUser)=>{
         //Message.create(msg).then((rMsg)=>{
            // dmModel.findByIdAndUpdate(data.dm).then((dm)=>{
@@ -18,6 +18,8 @@ utils.createDmMessage = function saveMessage(events, data){
                         avatar: author.avatar,
                       },
                       dm,
+                      id,
+                      nonce,
                       content,
                       createdAt: Date.now(),
                 });

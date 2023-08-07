@@ -7,7 +7,6 @@ const dmModel = require("../../models/dm");
 router.post("/:userId/messages", verifyToken, async (req, res) => {
   try {
     const dm = await dmModel.findOne({
-      participants: [req.user._id, req.params.userId],
       participants: { $all: [req.user._id, req.params.userId] }
     });
     if (!dm) return res.status(404).json({ message: "DM not found." });
@@ -28,14 +27,18 @@ router.post("/:userId/messages", verifyToken, async (req, res) => {
       createdAt: Date.now(),
     });*/
 
+    const id = Math.random().toString(36).substr(2, 9);
+
     const data = {
       dm,
       author: req.user,
-      content
+      content,
+      id,
+      nonce: req.body.nonce,
     }
 
     createDmMessage(events, data);
-    return res.status(200).json("Message sent successfully!");
+    return res.status(200).json({ message: "Message sent!", id: data.id });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Server error" });
