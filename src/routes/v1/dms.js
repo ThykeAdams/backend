@@ -42,4 +42,6 @@ router.post("/:userId/messages", verifyToken, async (req, res) => {
   }
 });
 
+router.post("/:userId/")
+
 module.exports = router;
