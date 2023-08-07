@@ -1,10 +1,10 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 let app = mongoose.Schema(
   {
     participants: {
       type: [String],
-      ref: "users",
+      ref: 'users',
       required: true,
     },
     lastMessage: {
@@ -18,7 +18,7 @@ let app = mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-module.exports = mongoose.model("dms", app);
+module.exports = mongoose.model('dms', app);

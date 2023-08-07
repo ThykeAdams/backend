@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 let app = mongoose.Schema(
   {
@@ -12,14 +12,14 @@ let app = mongoose.Schema(
     },
     author: {
       type: String,
-      ref: "users",
+      ref: 'users',
       default: false,
     },
   },
   {
     _id: false,
     timestamps: true,
-  }
+  },
 );
 
-module.exports = mongoose.model("dmMessages", app);
+module.exports = mongoose.model('dmMessages', app);
